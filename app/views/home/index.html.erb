@@ -1,0 +1,34 @@
+<h1>Home#index</h1>
+
+<div class="container">
+	<div class="row">
+		<div class"col-md-12">
+			<div class="col-md-6">
+				<%= @User.Name %>	
+				<br>
+				<br>
+				<br>
+				<span>Presupuesto para cuota inicial $<%= @User.Budget %></span>
+				<br>
+				<% favoriteProject = @User.Favorites.map { |project| [project.Name] } %>
+				<select id="project">
+					<%= options_for_select(favoriteProject) %>	
+				</select>
+				<br>
+				<label>Tasa de interes anual</label>
+				<input type="number" name="tasa_interes">
+				<br>
+				<label>Plazo en meses</label>
+				<input type="number" name="plazo_meses">
+
+
+				
+			</div>
+			<div class="col-md-6">
+				<table class="table">
+				<tr><th>Mes</th><th>Valor de cuota</th><th># de cuota</th></tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
