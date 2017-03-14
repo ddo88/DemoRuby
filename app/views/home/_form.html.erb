@@ -1,0 +1,35 @@
+<div class="col-md-6">
+    <%= @User.Name %>	
+    <br>
+    <br>
+    <br>
+    <span>Presupuesto para cuota inicial $<%= @User.Budget %></span>
+    <br />
+    <%= form_tag('/updateData') do -%>
+        <% favoriteProject = @User.Favorites.map { |project| [project.Name] } %>
+        <select id="project" name="project">
+            <%= options_for_select(favoriteProject) %>	
+        </select>
+        <br>
+        <label>Tasa de interes anual</label>
+        <input type="number" value="<%= @Tasa %>" name="tasa" step="0.01"/>
+        <br>
+        <label>Plazo en meses</label>
+        <input type="number" value="<%= @PlazoMeses %>" name="plazo"/>
+        
+        <%= submit_tag 'Save' %>
+    <% end -%>
+    
+</div>
+<div class="col-md-6">
+    <table class="table">
+    <tr><th>Mes</th><th>Valor de cuota</th><th># de cuota</th></tr>
+    <% @Cuotas.each do |cuota| %>
+    <tr>
+        <td><%= cuota.Mes =%></td> 
+        <td><%= cuota.Share[0] =%></td> 
+        <td><%= cuota.Number =%></td>
+    </tr>
+    <% end %>
+    </table>
+</div>
