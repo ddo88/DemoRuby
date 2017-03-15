@@ -1,33 +1,40 @@
 <div class="col-md-6">
+    <h3>
     <%= @User.Name %>	
-    <br>
-    <br>
-    <br>
-    <span>Presupuesto para cuota inicial $<%= @User.Budget %></span>
+    </h3>
+    
+    <span>Presupuesto para cuota inicial<%= number_to_currency @User.Budget, unit: "$", seperator: "," %></span>
+    <br />
     <br />
     <%= form_tag('/updateData') do -%>
+        <div class="form-group">
         <% favoriteProject = @User.Favorites.map { |project| [project.Name] } %>
-        <select id="project" name="project">
-            <%= options_for_select(favoriteProject) %>	
-        </select>
-        <br>
+            <label>Proyectos</label>
+            <select class="form-control" id="project" name="project">
+                <%= options_for_select(favoriteProject) %>	
+            </select>
+        </div>
+        <div class="form-group">
         <label>Tasa de interes anual</label>
-        <input type="number" value="<%= @Tasa %>" name="tasa" step="0.01"/>
-        <br>
-        <label>Plazo en meses</label>
-        <input type="number" value="<%= @PlazoMeses %>" name="plazo"/>
-        
-        <%= submit_tag 'Save' %>
+        <input class="form-control" type="number" value="<%= @Tasa %>" name="tasa" step="0.01"/>
+        </div>
+        <div class="form-group">
+            <label>Plazo en meses</label>
+            <input class="form-control" type="number" value="<%= @PlazoMeses %>" name="plazo"/>
+        </div>
+        <button type="submit" class="btn btn-default btn-primary">Calcular valor cuotas</button>
     <% end -%>
-    
 </div>
 <div class="col-md-6">
-    <table class="table">
+    <h3>Plan de pagos</h3>
+    <table class="table table-striped">
     <tr><th>Mes</th><th>Valor de cuota</th><th># de cuota</th></tr>
     <% @Cuotas.each do |cuota| %>
     <tr>
-        <td><%= cuota.Mes =%></td> 
-        <td><%= cuota.Share[0] =%></td> 
+        <td><%= cuota.Mes.strftime("%B %Y") =%></td> 
+        <!--<td><%= sprintf('%.2f', cuota.Share[0]) =%></td> -->
+        <td><%= number_to_currency cuota.Share[0], unit: "$", seperator: ","  =%></td> 
+        
         <td><%= cuota.Number =%></td>
     </tr>
     <% end %>
