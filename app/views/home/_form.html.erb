@@ -11,7 +11,7 @@
         <% favoriteProject = @User.Favorites.map { |project| [project.Name] } %>
             <label>Proyectos</label>
             <select class="form-control" id="project" name="project">
-                <%= options_for_select(favoriteProject) %>	
+                <%= options_for_select(favoriteProject,@Project.Name) %>	
             </select>
         </div>
         <div class="form-group">
